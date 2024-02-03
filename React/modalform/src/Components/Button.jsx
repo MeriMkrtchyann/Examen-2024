@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import {openOrCloze} from "../Redax/Slices/modalButtonSlice"
+import RegistrForm from "./Registr/RegistrForm"
  
 export default function Button(){
 
@@ -14,7 +15,7 @@ export default function Button(){
     return(
         <>
             <button onClick={modalButton}>Registration</button>
-            {buttonValue && <div>barevv</div>}
+            {buttonValue && <RegistrForm/>}
         </>
     )
 }
