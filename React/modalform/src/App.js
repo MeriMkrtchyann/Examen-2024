@@ -1,9 +1,11 @@
 import './App.css';
 
+import Registration from "./Pages/Registration"
+
 function App() {
   return (
     <div className="App">
-      modal form
+      <Registration/>
     </div>
   );
 }
