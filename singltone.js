@@ -1,77 +1,59 @@
-// class Singltone{
-
-//     static instance = null
-//     #data = null
-
-//     canstructor(){
-//         if (!Singltone.instance){
-//             Singltone.instance = this
-//         }
-//         return Singltone.instance
-//     }
-
-//     async #fetchData(){
-//         try{
-//             const promise = await fetch("https://jsonplaceholder.typicode.com/posts")
-//             const data = await promise.json()
-//             this.#data = data
-//             console.log(this.#data)
-//         }catch(err){
-//             console.error(err.message)
-//         }   
-//     }
-
-//     async getData(){
-//        if (!this.#data){
-//             await this.#fetchData()
-//             return this.#data
-//        }
-//     }
-// }
-
-Array.prototype.groupby = function(callBack){
+Array.prototype.groupby = function(value){
     const obj = {}
     for (let i = 0 ; i < this.length ; i++){
-        if (Object.keys(obj).includes(`${this[i].id}`)){
-            obj[this[i].id] = [obj[this[i].id] , this[i]]
+        if (Object.keys(obj).includes(`${this[i][value]}`)){
+            obj[this[i][value]] = [obj[this[i][value]] , this[i]]
         }else {
-            obj[this[i].id] = [this[i]]
+            obj[this[i][value]] = [this[i]]
         }
     }
     return obj
 }
 
-const a  = [
-    {
-        "userId": 1,
-        "id": 1,
-        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-    },
-    {
-        "userId": 1,
-        "id": 2,
-        "title": "qui est esse",
-        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-    },
-    {
-        "userId": 1,
-        "id": 2,
-        "title": "qui est esse",
-        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+class Singltone{
+    static instance = null
+    #data = null
+
+    constructor() {
+        if (Singltone.instance) {
+            throw new Error("")
+        } else {
+            Singltone.instance = this
+        }
     }
-]
 
-console.log(JSON.stringify(a.groupby()))
+    static getInstance(){
+        if (!Singltone.instance){
+            Singltone.instance = new Singltone()
+        }
+        return Singltone.instance
+    }
 
+    async #fetchData(){
+        try{
+            const promise = await fetch("https://jsonplaceholder.typicode.com/posts")
+            const data = await promise.json()
+            this.#data = data
+        }catch(err){
+            console.error(err.message)
+        }   
+    }
 
+    async groupData(value) {
+        if (!this.#data){
+           await this.#fetchData()
+           const newData = await this.#data.groupby(value)
+           return newData
+        }
+    }
+}
 
-// let obj = new Singltone()
+let obj1 = new Singltone()
+let obj2 = Singltone.getInstance()
 
-// async function getMyData(){
-//     return await obj.getData()
-// }
-
-// let myData = getMyData()
-
+async function foo (){
+   let a = await obj1.groupData("id")
+   console.log(JSON.stringify(a))
+}
+foo(obj1)
 
