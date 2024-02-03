@@ -1,0 +1,9 @@
+.conteyner label {
+  display: display-flex;
+  margin : 10px;
+  color: white;
+}
+
+.error {
+  color: read;
+}

@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux"
-import {openOrCloze} from "../Redax/Slices/modalButtonSlice"
-import RegistrForm from "./Registr/RegistrForm"
- 
+import {openOrCloze} from "../../Redax/Slices/modalButtonSlice"
+import RegistrForm from "../Registr/RegistrForm"
+import "./ButtonStyle.css" 
+
 export default function Button(){
 
     const buttonValue = useSelector((store) => store.modalButton.value)
@@ -14,7 +15,9 @@ export default function Button(){
 
     return(
         <>
-            <button onClick={modalButton}>Registration</button>
+            <div className="modalButton">
+                <button onClick={modalButton} >Registration</button>
+            </div>
             {buttonValue && <RegistrForm/>}
         </>
     )
